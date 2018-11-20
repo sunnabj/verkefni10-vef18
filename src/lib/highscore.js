@@ -1,10 +1,7 @@
 import { empty } from './helpers';
 import { load, clear } from './storage';
 
-/* eslint-disable guard-for-in */
-/* eslint-disable no-restricted-syntax */
-
-// todo vísa í rétta hluti með import
+/* eslint linebreak-style: ["error", "windows"] */
 
 /**
  * Reikna út stig fyrir svör út frá heildarfjölda svarað á tíma.
@@ -18,12 +15,11 @@ import { load, clear } from './storage';
  * @returns {number} Stig fyrir svör
  */
 export function score(total, correct, time) {
-  // todo útfæra
   if (total === 0) {
     return 0;
   }
+  // Ekki besta formúla í heimi en þó skárri en í demo
   return (((correct / time) * total) * 100).toFixed(2);
-  // return ((correct / time) + (total / time)) * 100;
 }
 
 /**
@@ -39,17 +35,17 @@ export default class Highscore {
 
   /**
    * Hlaða stigatöflu inn
+   * Nær í gögnin í fylki úr storage og sendir inn í highscore
    */
   load() {
-    // todo útfæra
     this.highscore(load());
   }
 
   /**
    * Hreinsa allar færslur úr stigatöflu, tengt við takka .highscore__button
+   * Notar clear í storage og tæmir html-ið + lætur vita að engin stig séu skráð
    */
   clear() {
-    // todo útfæra
     clear();
     empty(this.scores);
     this.button.classList.add('highscore__button--hidden');
@@ -63,15 +59,14 @@ export default class Highscore {
    * Hlaða inn stigatöflu fyrir gefin gögn.
    *
    * @param {array} data Fylki af færslum í stigatöflu
+   *
+   * Fer í gegnum gagnafylkið og parsar gögnin yfir í json
+   * og birtir þau svo síðan í html-inu.
    */
   highscore(data) {
-    // todo útfæra
     if (data.length > 0) {
       for (let i = 0; i < data.length; i += 1) {
-      // for (let contestant in data) {
-        // contestant = JSON.parse(contestant);
         const contestant = JSON.parse(data[i]);
-        // const contestantName = contestant['winner'];
         const contestantName = contestant.winner;
         const contestantResult = contestant.result;
 

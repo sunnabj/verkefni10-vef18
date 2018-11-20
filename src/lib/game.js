@@ -1,9 +1,10 @@
-// todo vísa í rétta hluti með import
+/* eslint linebreak-style: ["error", "windows"] */
+
 import Highscore, { score } from './highscore';
 // import { load, highscore } from './highscore Highscore';
 import { save, load } from './storage'; // Importar stakt fall.
 import question from './question'; // Þarf ekki slaufusviga, því createQuestion er default
-import { el, empty } from './helpers';
+import { empty } from './helpers';
 
 // allar breytur hér eru aðeins sýnilegar innan þessa módúl
 
@@ -16,7 +17,7 @@ let total = 0; // fjöldi spurninga í núverandi leik
 let correct = 0; // fjöldi réttra svara í núverandi leik
 let currentProblem; // spurning sem er verið að sýna
 
-let correctAnswer;
+let correctAnswer; // Rétt svar hverju sinni
 let points; // Fjöldi stiga í leik
 
 /**
@@ -27,7 +28,6 @@ function finish() {
   points = score(total, correct, playTime);
   const text = `Þú svaraðir ${correct} rétt af ${total} spurningum og fékkst ${points} stig fyrir. Skráðu þig á stigatöfluna!`;
 
-  // todo útfæra
   result.classList.remove('result--hidden');
   problem.classList.add('problem--hidden');
 
@@ -37,26 +37,15 @@ function finish() {
   const finalResults = document.createElement('span');
   finalResults.appendChild(document.createTextNode(text));
   resultItem.appendChild(finalResults);
-/*
-  const highscore = new Highscore();
-  highscore.load();
-*/
-  // save('blabla', 2); // Eða eitthvað, þarft bara að vísa svona beint í það ef þú hefur importað.
 }
 
 /**
  * Keyrir áfram leikinn. Telur niður eftir því hve langur leikur er og þegar
  * tími er búinn kallar í finish().
  *
- * Í staðinn fyrir að nota setInterval köllum við í setTimeout á sekúndu fresti.
- * Þurfum þá ekki að halda utan um id á intervali og skilum falli sem lokar
- * yfir fjölda sekúnda sem eftir er.
- *
  * @param {number} current Sekúndur eftir
  */
 function tick(current) {
-  // todo uppfæra tíma á síðu
-
   const problemTimer = document.querySelector('.problem__timer');
   empty(problemTimer);
   const element = document.createElement('span');
@@ -68,7 +57,7 @@ function tick(current) {
   }
 
   return () => {
-    setTimeout(tick(current - 1), 1000); // 1000 sekúndur á milli
+    setTimeout(tick(current - 1), 1000); // 1000 millisekúndur á milli
   };
 }
 
@@ -76,8 +65,6 @@ function tick(current) {
  * Býr til nýja spurningu og sýnir undir .problem__question
  */
 function showQuestion() {
-  // todo útfæra
-  // total += 1;
   problem.classList.remove('problem--hidden');
 
   currentProblem = question();
@@ -102,8 +89,6 @@ function showQuestion() {
  * - Sýnir fyrstu spurningu
  */
 function start() {
-  // todo útfæra
-  // button.scss er með skilgreint button--hidden - með display: none.
   total = 0;
   correct = 0;
   startButton.classList.add('button--hidden'); // Takkinn fer ef við ýtum á start!
@@ -137,6 +122,9 @@ function onSubmit(e) {
  * Event handler fyrir þegar stig eru skráð eftir leik.
  *
  * @param {*} e Event þegar stig eru skráð
+ *
+ * Vistar með save í storage. Tæmir highscore stigin en hleður þeim inn aftur
+ * svo þau hlaðist ekki upp endurtekið.
  */
 function onSubmitScore(e) {
   e.preventDefault();
@@ -165,11 +153,10 @@ function onSubmitScore(e) {
 export default function init(_playTime) {
   playTime = _playTime;
 
-  // todo útfæra
   problem = document.querySelector('.problem');
   result = document.querySelector('.result');
-  // Hafa allt hér sem þarf atburðahandlera og svona
-  startButton = document.querySelector('.start'); 
+
+  startButton = document.querySelector('.start');
   startButton.addEventListener('click', start);
 
   const questionInput = document.querySelector('.problem__answer button');
@@ -177,6 +164,4 @@ export default function init(_playTime) {
 
   const resultButton = document.querySelector('.result__form button');
   resultButton.addEventListener('click', onSubmitScore);
-
-  // load();
 }

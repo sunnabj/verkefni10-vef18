@@ -1,3 +1,5 @@
+/* eslint linebreak-style: ["error", "windows"] */
+
 import initGame from './lib/game';
 import Highscore from './lib/highscore';
 

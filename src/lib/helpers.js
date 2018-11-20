@@ -1,3 +1,4 @@
+/* eslint linebreak-style: ["error", "windows"] */
 
 /**
  * Hreinsa börn úr elementi

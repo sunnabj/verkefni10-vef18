@@ -2,6 +2,8 @@
  * Úr sýnilausn fyrir verkefni 7.
  */
 
+/* eslint linebreak-style: ["error", "windows"] */
+
 const operators = ['+', '-', '*', '/'];
 
 /**
