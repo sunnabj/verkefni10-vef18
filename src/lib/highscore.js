@@ -22,7 +22,8 @@ export function score(total, correct, time) {
   if (total === 0) {
     return 0;
   }
-  return (correct / total) * 100;
+  return (((correct / time) * total) * 100).toFixed(2);
+  // return ((correct / time) + (total / time)) * 100;
 }
 
 /**

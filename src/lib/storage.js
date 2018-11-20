@@ -7,7 +7,7 @@
 
 // Fasti sem skilgreinir heiti á lykli sem vistað er undir í localStorage
 const LOCALSTORAGE_KEY = 'calc_game_scores';
-const pointArray = [];
+let pointArray = [];
 
 /**
  * Sækir gögn úr localStorage. Skilað sem röðuðum lista á forminu:
@@ -22,6 +22,8 @@ export function load() {
 
   // const div = document.querySelector('.highscore__scores');
   if (saved) {
+    // const nopointsText = document.querySelector('.highscore__scores');
+    // nopointsText.classList.add('p--hidden');
     const sorted = function sortResults(a, b) {
       return JSON.parse(b).result - JSON.parse(a).result;
     };
@@ -54,6 +56,9 @@ export function load() {
     // return saved;
     return keysSorted;
   }
+  const pointsEmpty = document.createElement('p');
+  pointsEmpty.appendChild(document.createTextNode('Engin stig skráð'));
+  document.querySelector('.highscore__scores').appendChild(pointsEmpty);
   return [];
 }
 
@@ -86,4 +91,5 @@ export function save(name, points) {
 export function clear() {
   // todo útfæra
   window.localStorage.clear();
+  pointArray = [];
 }
