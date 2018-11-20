@@ -4,7 +4,9 @@
 
 // Fasti sem skilgreinir heiti á lykli sem vistað er undir í localStorage
 const LOCALSTORAGE_KEY = 'calc_game_scores';
-const pointArray = []; // vafasamt
+const pointArray = [];
+let contestantName;
+let contestantResult;
 
 /*
 function sort(objectArray) {
@@ -22,12 +24,29 @@ function sort(objectArray) {
  */
 export function load() {
   // todo útfæra
-  
-  const saved = window.localStorage.getItem(LOCALSTORAGE_KEY);
-  const div = document.querySelector('.highscore__scores');
+  console.log(window.localStorage.getItem(LOCALSTORAGE_KEY));
+  const saved = JSON.parse(window.localStorage.getItem(LOCALSTORAGE_KEY));
+
+  // const div = document.querySelector('.highscore__scores');
   if (saved) {
+    /*
     console.log(saved);
-    div.textContent = saved;
+    console.log(saved["winner"]);
+    console.log(saved['result']);
+    */
+    
+    // div.textContent = saved; //Sýnir fylkið í stigatöflunni.
+/*
+    const numberdiv = document.createElement('span');
+    numberdiv.classList.add('highscore__number');
+    numberdiv.appendChild(document.createTextNode(contestantResult, ' stig'));
+    div.appendChild(numberdiv);
+
+    const namediv = document.createElement('span');
+    namediv.classList.add('highscore__name');
+    namediv.appendChild(document.createTextNode(contestantName));
+    div.appendChild(namediv);
+*/
     // const parsed = JSON.parse(saved);
 
     // sort(saved);
@@ -66,16 +85,30 @@ export function save(name, points) {
     winner: name,
     result: points,
   };
-  
-  pointArray.push(JSON.stringify(obj)); 
+
+  pointArray.push(JSON.stringify(obj));
+  console.log(obj.winner);
+  console.log(obj.result);
+  contestantName = obj.winner;
+  contestantResult = obj.result;
   // localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(obj));
-  localStorage.setItem(LOCALSTORAGE_KEY, pointArray); 
-  
+  console.log('json array test', JSON.stringify(pointArray));
+  // localStorage.setItem(LOCALSTORAGE_KEY, { ...pointArray });
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(pointArray));
+
   /*
   const data = { name, points };
   const json = JSON.stringify(data);
   window.localStorage.setItem(LOCALSTORAGE_KEY, json);
   */
+}
+
+export function getContestantName() {
+  return contestantName;
+}
+
+export function getContestantResult() {
+  return contestantResult;
 }
 
 /**

@@ -37,7 +37,10 @@ function finish() {
   const finalResults = document.createElement('span');
   finalResults.appendChild(document.createTextNode(text));
   resultItem.appendChild(finalResults);
-
+/*
+  const highscore = new Highscore();
+  highscore.load();
+*/
   // save('blabla', 2); // Eða eitthvað, þarft bara að vísa svona beint í það ef þú hefur importað.
 }
 
@@ -106,7 +109,7 @@ function showQuestion() {
 function start() {
   // todo útfæra
   // button.scss er með skilgreint button--hidden - með display: none.
-  load();
+  // load();
   // highscore(load());
   total = 0;
   // points = 0;
@@ -156,6 +159,11 @@ function onSubmitScore(e) {
 
   save(winner, points);
 
+  const highscores = document.querySelector('.highscore__scores');
+  empty(highscores);
+  const highscore = new Highscore();
+  highscore.load();
+
   result.classList.add('result--hidden');
   problem.classList.add('problem--hidden');
   startButton.classList.remove('button--hidden');
@@ -182,5 +190,5 @@ export default function init(_playTime) {
   const resultButton = document.querySelector('.result__form button');
   resultButton.addEventListener('click', onSubmitScore);
 
-  load();
+  // load();
 }
