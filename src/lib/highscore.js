@@ -1,4 +1,5 @@
 import { empty } from './helpers';
+import { load, save, clear } from './storage';
 
 // todo vísa í rétta hluti með import
 
@@ -34,6 +35,8 @@ export default class Highscore {
    */
   load() {
     // todo útfæra
+    const pointArray = load();
+    console.log(pointArray);
   }
 
   /**
@@ -51,5 +54,8 @@ export default class Highscore {
    */
   highscore(data) {
     // todo útfæra
+    const element = document.createElement('span');
+    element.appendChild(document.createTextNode(data));
+    this.scores.appendChild(element);
   }
 }

@@ -1,5 +1,6 @@
 // todo vísa í rétta hluti með import
-import { score } from './highscore';
+import Highscore, { score } from './highscore';
+// import { load, highscore } from './highscore Highscore';
 import { save, load } from './storage'; // Importar stakt fall.
 import question from './question'; // Þarf ekki slaufusviga, því createQuestion er default
 import { el, empty } from './helpers';
@@ -105,6 +106,8 @@ function showQuestion() {
 function start() {
   // todo útfæra
   // button.scss er með skilgreint button--hidden - með display: none.
+  load();
+  // highscore(load());
   total = 0;
   // points = 0;
   correct = 0;
