@@ -1,6 +1,6 @@
 // todo vísa í rétta hluti með import
 import { score } from './highscore';
-import { save } from './storage'; // Importar stakt fall.
+import { save, load } from './storage'; // Importar stakt fall.
 import question from './question'; // Þarf ekki slaufusviga, því createQuestion er default
 import { el, empty } from './helpers';
 
@@ -16,25 +16,26 @@ let correct = 0; // fjöldi réttra svara í núverandi leik
 let currentProblem; // spurning sem er verið að sýna
 
 let correctAnswer;
+let points; // Fjöldi stiga í leik
 
 /**
  * Klárar leik. Birtir result og felur problem. Reiknar stig og birtir í result.
  */
 function finish() {
 
-  const points = score(total, correct, playTime);
+  points = score(total, correct, playTime);
   const text = `Þú svaraðir ${correct} rétt af ${total} spurningum og fékkst ${points} stig fyrir. Skráðu þig á stigatöfluna!`;
 
   // todo útfæra
   result.classList.remove('result--hidden');
   problem.classList.add('problem--hidden');
 
-  const textItem = document.querySelector('.text');
-  empty(textItem);
+  const resultItem = document.querySelector('.result__text');
+  empty(resultItem);
 
   const finalResults = document.createElement('span');
   finalResults.appendChild(document.createTextNode(text));
-  textItem.appendChild(finalResults);
+  resultItem.appendChild(finalResults);
 
   // save('blabla', 2); // Eða eitthvað, þarft bara að vísa svona beint í það ef þú hefur importað.
 }
@@ -72,7 +73,7 @@ function tick(current) {
  */
 function showQuestion() {
   // todo útfæra
-  total += 1;
+  // total += 1;
   problem.classList.remove('problem--hidden');
 
   // currentProblem = JSON.stringify(question());
@@ -104,6 +105,9 @@ function showQuestion() {
 function start() {
   // todo útfæra
   // button.scss er með skilgreint button--hidden - með display: none.
+  total = 0;
+  // points = 0;
+  correct = 0;
   startButton.classList.add('button--hidden'); // Takkinn fer ef við ýtum á start!
   showQuestion();
   setTimeout(tick(10));
@@ -120,12 +124,14 @@ function onSubmit(e) {
   // todo útfæra
   // console.log(correctAnswer);
   // console.log(e);
+  total += 1;
   const { target } = e;
   // console.log(target);
   const { parentNode } = target;
   // console.log(parentNode[0].value);
   // console.log(target.previousSibling);
   // console.log('target 0: ', target[0]);
+  parentNode.focus();
   const answer = parentNode[0].value;
   if (Number(answer) === correctAnswer) {
     correct += 1;
@@ -141,9 +147,11 @@ function onSubmit(e) {
  */
 function onSubmitScore(e) {
   e.preventDefault();
+  const { target } = e;
+  const { parentNode } = target;
+  const winner = parentNode[0].value;
 
-  // todo útfæra
-  
+  save(winner, points);
 
   result.classList.add('result--hidden');
   problem.classList.add('problem--hidden');
@@ -167,4 +175,9 @@ export default function init(_playTime) {
 
   const questionInput = document.querySelector('.problem__answer button');
   questionInput.addEventListener('click', onSubmit);
+
+  const resultButton = document.querySelector('.result__form button');
+  resultButton.addEventListener('click', onSubmitScore);
+
+  load();
 }

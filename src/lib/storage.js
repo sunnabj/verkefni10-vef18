@@ -2,8 +2,9 @@
  * Sækir og vistar í localStorage
  */
 
-// Fast sem skilgreinir heiti á lykli sem vistað er undir í localStorage
+// Fasti sem skilgreinir heiti á lykli sem vistað er undir í localStorage
 const LOCALSTORAGE_KEY = 'calc_game_scores';
+// let pointArray = [];
 
 /**
  * Sækir gögn úr localStorage. Skilað sem röðuðum lista á forminu:
@@ -13,7 +14,14 @@ const LOCALSTORAGE_KEY = 'calc_game_scores';
  */
 export function load() {
   // todo útfæra
-  // Kalla á þetta þegar leikurinn byrjar. Ef eitthvað vistað þá bætum við því við í html-ið.
+  
+  const saved = window.localStorage.getItem(LOCALSTORAGE_KEY);
+  const div = document.querySelector('.highscore__scores');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    console.log('Vistuð gögn:', parsed);
+    div.textContent = `Vistað: ${saved}`;
+  }
 }
 
 /**
@@ -25,6 +33,13 @@ export function load() {
 export function save(name, points) {
   // todo útfæra
   // Vistar inn í local storage
+  const obj = {
+    winner: name,
+    result: points,
+  };
+  // pointArray.push(JSON.stringify(obj));
+  localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(obj));
+  // localStorage.setItem(LOCALSTORAGE_KEY, pointArray);
 }
 
 /**

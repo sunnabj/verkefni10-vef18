@@ -1,3 +1,5 @@
+import { empty } from './helpers';
+
 // todo vísa í rétta hluti með import
 
 /**
@@ -39,6 +41,7 @@ export default class Highscore {
    */
   clear() {
     // todo útfæra
+    empty(this.scores);
   }
 
   /**
