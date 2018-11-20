@@ -1,5 +1,5 @@
 import { empty } from './helpers';
-import { load, save, clear, getContestantName, getContestantResult } from './storage';
+import { load, clear } from './storage';
 
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
@@ -49,8 +49,8 @@ export default class Highscore {
    */
   clear() {
     // todo útfæra
-    empty(this.scores);
     clear();
+    empty(this.scores);
     this.button.classList.add('highscore__button--hidden');
 
     const pointsEmpty = document.createElement('p');
@@ -70,24 +70,24 @@ export default class Highscore {
       // for (let contestant in data) {
         // contestant = JSON.parse(contestant);
         const contestant = JSON.parse(data[i]);
-        const contestantName = contestant['winner'];
-        const contestantResult = contestant['result'];
+        // const contestantName = contestant['winner'];
+        const contestantName = contestant.winner;
+        const contestantResult = contestant.result;
 
         const contestantdiv = document.createElement('p');
         this.scores.appendChild(contestantdiv);
 
         const numberdiv = document.createElement('span');
         numberdiv.classList.add('highscore__number');
-        numberdiv.appendChild(document.createTextNode(contestantResult, ' stig'));
-        contestantdiv.appendChild(numberdiv); // var this.score.append...
+        numberdiv.appendChild(document.createTextNode(`${i + 1}. ${contestantResult} stig`));
+        contestantdiv.appendChild(numberdiv);
 
         const namediv = document.createElement('span');
         namediv.classList.add('highscore__name');
         namediv.appendChild(document.createTextNode(contestantName));
-        contestantdiv.appendChild(namediv); // var this.score.append...
+        contestantdiv.appendChild(namediv);
       }
-      const nopointsText = document.querySelector('.highscore__scores p');
-      // empty(nopointsText);
+      const nopointsText = document.querySelector('.highscore__scores');
       nopointsText.classList.add('p--hidden');
       this.button.classList.remove('highscore__button--hidden');
     }

@@ -80,15 +80,10 @@ function showQuestion() {
   // total += 1;
   problem.classList.remove('problem--hidden');
 
-  // currentProblem = JSON.stringify(question());
   currentProblem = question();
-  // const problemFinal = Object.values(currentProblem)[0];
-  const problemFinal = currentProblem.problem;
-  // const parsedProblem = JSON.stringify(currentProblem);
-  // const problemFinal = Object.values(parsedProblem);
-  // correctAnswer = Object.values(currentProblem)[1];
-  correctAnswer = currentProblem.answer;
 
+  const problemFinal = currentProblem.problem;
+  correctAnswer = currentProblem.answer;
   const problemQuestion = document.querySelector('.problem__question');
 
   empty(problemQuestion);
@@ -109,10 +104,7 @@ function showQuestion() {
 function start() {
   // todo útfæra
   // button.scss er með skilgreint button--hidden - með display: none.
-  // load();
-  // highscore(load());
   total = 0;
-  // points = 0;
   correct = 0;
   startButton.classList.add('button--hidden'); // Takkinn fer ef við ýtum á start!
   showQuestion();
@@ -127,16 +119,11 @@ function start() {
  */
 function onSubmit(e) {
   e.preventDefault();
-  // todo útfæra
-  // console.log(correctAnswer);
-  // console.log(e);
+
   total += 1;
   const { target } = e;
-  // console.log(target);
   const { parentNode } = target;
-  // console.log(parentNode[0].value);
-  // console.log(target.previousSibling);
-  // console.log('target 0: ', target[0]);
+
   parentNode.focus();
   const answer = parentNode[0].value;
   if (Number(answer) === correctAnswer) {
@@ -161,6 +148,7 @@ function onSubmitScore(e) {
 
   const highscores = document.querySelector('.highscore__scores');
   empty(highscores);
+
   const highscore = new Highscore();
   highscore.load();
 
