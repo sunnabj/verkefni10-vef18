@@ -40,7 +40,7 @@ export function load() {
  *
  * @param {string} name Nafn þess sem á að vista
  * @param {number} points Stig sem á að vista
- * 
+ *
  * Búum til object með nafni og stigum og setjum inn í fylki sem heldur
  * utan um þátttakendur inni í localStorage
  */

@@ -2,7 +2,7 @@
 
 import Highscore, { score } from './highscore';
 // import { load, highscore } from './highscore Highscore';
-import { save, load } from './storage'; // Importar stakt fall.
+import { save } from './storage'; // Importar stakt fall.
 import question from './question'; // Þarf ekki slaufusviga, því createQuestion er default
 import { empty } from './helpers';
 
@@ -24,7 +24,6 @@ let points; // Fjöldi stiga í leik
  * Klárar leik. Birtir result og felur problem. Reiknar stig og birtir í result.
  */
 function finish() {
-
   points = score(total, correct, playTime);
   const text = `Þú svaraðir ${correct} rétt af ${total} spurningum og fékkst ${points} stig fyrir. Skráðu þig á stigatöfluna!`;
 
